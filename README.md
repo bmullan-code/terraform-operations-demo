@@ -77,6 +77,6 @@ gcloud logging metrics create custom-metric2 --config-from-file ./custom-metric.
 - Then explore this metric in Logging -> Log Based Metrics
 
 ### to do
--- create metrics (based on log)
--- create dashboard
--- error reporting
+- create metrics (based on log)
+- create dashboard (Monitoring)
+- error reporting
