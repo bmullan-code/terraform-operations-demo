@@ -65,11 +65,18 @@ kubectl get pods
 ```
 
 - go to operations console
--- review Logging -> Logs Explorer
--- review Trace -> Trace List
+- review Logging -> Logs Explorer
+- review Trace -> Trace List
 
-- to do
+### Things to try
+- create a log based metric. 
+- An example is provided in the log-based-metric.yml file
+```
+gcloud logging metrics create custom-metric2 --config-from-file ./custom-metric.yml
+```
+- Then explore this metric in Logging -> Log Based Metrics
+
+### to do
 -- create metrics (based on log)
 -- create dashboard
 -- error reporting
-
