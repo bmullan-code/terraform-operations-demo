@@ -1,0 +1,11 @@
+bucketOptions:
+  exponentialBuckets:
+    growthFactor: 2.0
+    numFiniteBuckets: 64
+    scale: 0.01
+filter: '"cloud-trace-demo-app-opentelemetry-client" '
+metricDescriptor:
+  metricKind: DELTA
+  unit: seconds
+  valueType: DISTRIBUTION
+valueExtractor: REGEXP_EXTRACT(textPayload, "elapsed=([0-9.]+)")
