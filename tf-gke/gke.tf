@@ -5,12 +5,12 @@ resource "google_container_cluster" "primary" {
   remove_default_node_pool = true
   initial_node_count = 1
 
-  network    = google_compute_network.vpc.name
-  subnetwork = google_compute_subnetwork.subnet.name
+  network    = google_compute_network.vpc.self_link
+  subnetwork = google_compute_subnetwork.subnet.self_link
 
   ip_allocation_policy {
-    cluster_secondary_range_name  = "${var.project_id}-services"
-    services_secondary_range_name = google_compute_subnetwork.subnet.secondary_ip_range.1.range_name
+    cluster_secondary_range_name  = "${var.project_id}-cluster"
+    services_secondary_range_name = "${var.project_id}-services"
   }
 
   # other settings...
@@ -26,9 +26,17 @@ resource "google_container_node_pool" "primary_nodes" {
 
   node_config {
     oauth_scopes = [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/logging.write",
       "https://www.googleapis.com/auth/monitoring",
+      "https://www.googleapis.com/auth/devstorage.read_only",
+      "https://www.googleapis.com/auth/pubsub",
+      "https://www.googleapis.com/auth/trace.append",
     ]
+#    oauth_scopes = [
+#      "https://www.googleapis.com/auth/logging.write",
+#      "https://www.googleapis.com/auth/monitoring",
+#    ]
 
     labels = {
       env = var.project_id

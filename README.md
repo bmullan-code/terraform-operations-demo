@@ -22,33 +22,13 @@ export TF_VAR_zone=us-central1-a
 ```
 - Create a terraform service account
 ```
-gcloud iam service-accounts create terraform \
-  --project=$PROJECT_ID
-# add roles
-gcloud projects add-iam-policy-binding $PROJECT_ID  \
-  --member="serviceAccount:terraform@$PROJECT_ID.iam.gserviceaccount.com" \
-  --role="roles/compute.admin"
-# roles/compute.networkAdmin
-gcloud projects add-iam-policy-binding $PROJECT_ID  \
-  --member="serviceAccount:terraform@$PROJECT_ID.iam.gserviceaccount.com" \
-  --role="roles/compute.networkAdmin"
-# roles/container.clusterAdmin
-gcloud projects add-iam-policy-binding $PROJECT_ID  \
-  --member="serviceAccount:terraform@$PROJECT_ID.iam.gserviceaccount.com" \
-  --role="roles/container.clusterAdmin"
-# roles/billing.projectManager
-gcloud projects add-iam-policy-binding $PROJECT_ID  \
-  --member="serviceAccount:terraform@$PROJECT_ID.iam.gserviceaccount.com" \
-  --role="roles/billing.projectManager"
-# roles/iam.serviceAccountUser
-gcloud projects add-iam-policy-binding $PROJECT_ID  \
-  --member="serviceAccount:terraform@$PROJECT_ID.iam.gserviceaccount.com" \
-  --role="roles/iam.serviceAccountUser"
-
+export TERRAFORM_SA_ID=terraform
+./create-service-account.sh
 ```
-
-
-
+- If running in argolis, set org policies
+```
+./set-argolis-org-policies.sh
+```
 
 ## Deploy the gke infrastructure
 
@@ -58,6 +38,4 @@ terraform init
 terraform plan
 terraform apply --auto-approve
 # will take about 10 minutes to complete
-
-
 ```
